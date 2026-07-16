@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Landing from './pages/Landing';
@@ -69,7 +69,7 @@ const AppContent = () => {
           <Route path="/login"             element={<Login />} />
           <Route path="/register"          element={<Register />} />
           <Route path="/forgot-password"   element={<ForgotPassword />} />
-          <Route path="/verify-email"      element={<VerifyEmail />} />
+          <Route path="/verify-email"      element={<Navigate to="/dashboard" replace />} />
           <Route path="/portfolio/:id"     element={<PortfolioDetails />} />
           <Route path="/safety"            element={<Safety />} />
           <Route path="/privacy"           element={<Privacy />} />

@@ -69,16 +69,17 @@ export const AuthProvider = ({ children }) => {
 
     const register = useCallback(async (formData) => {
         setLoading(true);
-        const data = new FormData();
-        data.append('name', formData.name);
-        data.append('email', formData.email);
-        data.append('phone', formData.phone);
-        data.append('password', formData.password);
 
         try {
             const response = await fetch(`${API_URL}/auth/register`, {
                 method: 'POST',
-                body: data
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    phone: formData.phone,
+                    password: formData.password
+                })
             });
 
             const result = await response.json();
@@ -100,7 +101,7 @@ export const AuthProvider = ({ children }) => {
                 setUser(userData);
                 setToken(result.token);
                 showToast('Registration successful! Please verify your email.', 'success');
-                navigate('/verify-email', { state: { email: formData.email } });
+                navigate('/dashboard', { replace: true });
                 return { success: true, user: userData };
             } else {
                 showToast(result.message || 'Registration failed', 'error');
