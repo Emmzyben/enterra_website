@@ -4,7 +4,7 @@ import useAuth from '../hooks/useAuth';
 import {
     Shield, Star, Calendar, Search, CheckCircle, ArrowRight,
     UserCheck, Lock, Camera, Music, Palette, Play, Zap, ChevronRight, MapPin,
-    MessageSquare, QrCode, Users
+    MessageSquare, QrCode, Users, Smartphone, Download
 } from 'lucide-react';
 import API_URL from '../config';
 
@@ -388,6 +388,31 @@ const Landing = () => {
                             <Link to="/safety" className="btn btn-primary">Read our Safety Policy</Link>
                         </div>
                     </div>
+                </div>
+            </section>
+            {/* Download App Section */}
+            <section className="section-padding" style={{ backgroundColor: 'var(--primary)', color: 'white', position: 'relative', overflow: 'hidden' }}>
+                <div style={{
+                    position: 'absolute', top: '-50%', left: '-10%', width: '600px', height: '600px',
+                    background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%)', borderRadius: '50%'
+                }}></div>
+                <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+
+                    <h2 style={{ fontSize: '3rem', marginBottom: '1rem', fontWeight: '800', color: 'white' }}>Get the Enterra App</h2>
+                    <p style={{ fontSize: '1.2rem', marginBottom: '2.5rem', maxWidth: '600px', color: 'rgba(255,255,255,0.9)' }}>
+                        Take Enterra with you everywhere. Manage your events, chat with vendors, and get instant notifications on the go.
+                    </p>
+                    <a
+                        href="https://expo.dev/artifacts/eas/-2oxC1cFRBsrnODPIlDpSAoH386FBdFWFcDSwx7L5ss.apk"
+                        className="btn btn-primary"
+                        style={{
+                            backgroundColor: 'white', color: 'var(--primary)', fontWeight: '800',
+                            padding: '1rem 2rem', fontSize: '1.1rem', display: 'inline-flex', alignItems: 'center', gap: '0.75rem', borderRadius: '50px',
+                            boxShadow: '0 10px 25px rgba(0,0,0,0.15)', textDecoration: 'none'
+                        }}
+                    >
+                        <Download size={22} /> Download APK
+                    </a>
                 </div>
             </section>
 
