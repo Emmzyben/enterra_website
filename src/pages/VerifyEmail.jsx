@@ -10,7 +10,19 @@ const VerifyEmail = () => {
   const { showToast } = useToast();
   const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
+  const [resending, setResending] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(0);
   const email = location.state?.email || '';
+
+  React.useEffect(() => {
+    let interval;
+    if (resendCooldown > 0) {
+      interval = setInterval(() => {
+        setResendCooldown(c => c - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [resendCooldown]);
 
   const handleVerify = async (e) => {
     e.preventDefault();
@@ -39,6 +51,30 @@ const VerifyEmail = () => {
       console.error(err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    if (resendCooldown > 0 || resending) return;
+    setResending(true);
+    try {
+      const response = await fetch(`${API_URL}/auth/resend-verification-code`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const data = await response.json();
+      if (response.ok || data.status === 'success' || data.message?.toLowerCase().includes('resent')) {
+        showToast('A new verification code has been sent to your email.', 'success');
+        setResendCooldown(60);
+      } else {
+        showToast(data.message || 'Could not resend code.', 'error');
+      }
+    } catch (err) {
+      showToast('Connection error. Please try again.', 'error');
+      console.error(err);
+    } finally {
+      setResending(false);
     }
   };
 
@@ -98,6 +134,25 @@ const VerifyEmail = () => {
             {loading ? 'Verifying...' : 'Verify Email'} <ArrowRight size={18} style={{ marginLeft: '8px' }} />
           </button>
         </form>
+
+        <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+          <button 
+            type="button" 
+            onClick={handleResend}
+            disabled={resending || resendCooldown > 0}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: resendCooldown > 0 ? '#9ca3af' : '#EB4641',
+              fontWeight: 700,
+              cursor: (resendCooldown > 0 || resending) ? 'not-allowed' : 'pointer',
+              fontSize: '0.9rem',
+              textDecoration: resendCooldown > 0 ? 'none' : 'underline'
+            }}
+          >
+            {resending ? 'Resending...' : resendCooldown > 0 ? `Resend Code in ${resendCooldown}s` : "Didn't receive code? Resend"}
+          </button>
+        </div>
       </div>
     </div>
   );
