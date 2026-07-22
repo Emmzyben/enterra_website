@@ -16,7 +16,7 @@ const VerifyEmail = () => {
 
   React.useEffect(() => {
     let interval;
-    if (resendCooldown > 0) {
+    if (resendCooldown > 0) {8
       interval = setInterval(() => {
         setResendCooldown(c => c - 1);
       }, 1000);

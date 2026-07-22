@@ -403,7 +403,7 @@ const Landing = () => {
                         Take Enterra with you everywhere. Manage your events, chat with vendors, and get instant notifications on the go.
                     </p>
                     <a
-                        href="https://expo.dev/artifacts/eas/-2oxC1cFRBsrnODPIlDpSAoH386FBdFWFcDSwx7L5ss.apk"
+                        href="https://expo.dev/artifacts/eas/TF-rddzJk1ITma5lg_ILGNPmK4rOn3VpfzhBwKEuj84.apk"
                         className="btn btn-primary"
                         style={{
                             backgroundColor: 'white', color: 'var(--primary)', fontWeight: '800',
